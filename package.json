@@ -113,7 +113,7 @@
   },
   "codegenConfig": {
     "name": "WindowSafeAreaInsetsSpec",
-    "type": "modules",
+    "type": "all",
     "jsSrcsDir": "src",
     "android": {
       "javaPackageName": "com.windowsafeareainsets"

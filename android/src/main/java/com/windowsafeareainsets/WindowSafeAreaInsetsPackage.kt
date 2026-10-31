@@ -5,26 +5,30 @@ import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
+import com.facebook.react.uimanager.ViewManager
 
 class WindowSafeAreaInsetsPackage : BaseReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-    return if (name == WindowSafeAreaInsetsModule.NAME) {
-      WindowSafeAreaInsetsModule(reactContext)
-    } else {
-      null
+    return when (name) {
+      WindowSafeAreaInsetsModule.NAME -> WindowSafeAreaInsetsModule(reactContext)
+      WindowSystemBarsModule.NAME -> WindowSystemBarsModule(reactContext)
+      else -> null
     }
   }
 
+  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> =
+    listOf(SystemBarsAnchorManager())
+
   override fun getReactModuleInfoProvider() = ReactModuleInfoProvider {
-    mapOf(
-      WindowSafeAreaInsetsModule.NAME to ReactModuleInfo(
-        name = WindowSafeAreaInsetsModule.NAME,
-        className = WindowSafeAreaInsetsModule.NAME,
+    listOf(WindowSafeAreaInsetsModule.NAME, WindowSystemBarsModule.NAME).associateWith { name ->
+      ReactModuleInfo(
+        name = name,
+        className = name,
         canOverrideExistingModule = false,
         needsEagerInit = false,
         isCxxModule = false,
         isTurboModule = true
       )
-    )
+    }
   }
 }
