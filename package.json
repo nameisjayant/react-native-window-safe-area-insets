@@ -117,6 +117,15 @@
     "jsSrcsDir": "src",
     "android": {
       "javaPackageName": "com.windowsafeareainsets"
+    },
+    "ios": {
+      "modulesProvider": {
+        "WindowSafeAreaInsets": "WindowSafeAreaInsets",
+        "WindowSystemBars": "WindowSystemBars"
+      },
+      "componentProvider": {
+        "SystemBarsAnchor": "SystemBarsAnchorView"
+      }
     }
   },
   "prettier": {

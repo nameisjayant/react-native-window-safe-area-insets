@@ -9,7 +9,7 @@ const ZERO_INSETS: WindowInsets = {
 };
 
 /**
- * Android only for now. Elsewhere it lays out its children and does not touch
+ * Android and iOS only. Elsewhere it lays out its children and does not touch
  * the system bars.
  */
 export function SystemBarsView({

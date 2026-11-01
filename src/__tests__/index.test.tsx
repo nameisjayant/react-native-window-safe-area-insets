@@ -1,8 +1,9 @@
 import { describe, expect, it } from '@jest/globals';
 import { Text } from 'react-native';
-import { SystemBarsView, useWindowInsets } from '../SystemBarsView';
+// Named in full, or Jest would resolve it to the .native file.
+const { SystemBarsView, useWindowInsets } = require('../SystemBarsView.tsx');
 
-describe('SystemBarsView off Android', () => {
+describe('SystemBarsView off Android and iOS', () => {
   it('passes view props on and keeps bar props off the view', () => {
     const element = SystemBarsView({
       children: <Text>child</Text>,

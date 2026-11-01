@@ -14,8 +14,6 @@ npm install react-native-window-safe-area-insets
 
 `SystemBarsView` is a parent view. It keeps its children clear of the status bar, the navigation bar and the display cutout, and colors those bars.
 
-> Android only for now. On iOS it lays out its children and leaves the bars alone.
-
 ```jsx
 import { SystemBarsView } from 'react-native-window-safe-area-insets';
 
@@ -62,7 +60,7 @@ By default content stops below the status bar. `fullScreen` draws it behind the 
 | `navigationBarColor` | color | background of `style` | |
 | `fullScreen` | boolean | `false` | Draw content behind the status bar and the cutout. |
 | `statusBarStyle` | `auto`, `dark-content`, `light-content` | `auto` | Icon color. `auto` picks whichever is readable. |
-| `navigationBarStyle` | `auto`, `dark-content`, `light-content` | `auto` | On Android 7 the icons are always light, so a light bar is dimmed to keep them visible. |
+| `navigationBarStyle` | `auto`, `dark-content`, `light-content` | `auto` | On Android 7 the icons are always light, so a light bar is dimmed to keep them visible. No effect on iOS. |
 | `style` | view style | | Applied to the view holding the children. |
 
 `useWindowInsets()` returns the current `statusBar`, `navigationBar` and `displayCutout` insets, for example to keep a header clear of the status bar in `fullScreen`.
@@ -72,6 +70,16 @@ By default content stops below the status bar. `fullScreen` draws it behind the 
 - Requires the New Architecture. Android support follows React Native's own minimum, which is Android 7 (API 24) on React Native 0.88.
 - The window stays edge-to-edge from the first time a `SystemBarsView` mounts, so wrap every screen, or wrap once in `App.js`.
 - Avoid `StatusBar` from React Native for `barStyle` alongside this component. Both set the same window state.
+
+### iOS notes
+
+- Requires the New Architecture.
+- The navigation bar is the area around the home indicator. `navigationBarColor` colors that area, and on iPhones with a home button there is nothing to color. iOS picks the color of the indicator itself.
+- `displayCutout` is the safe area on the top, left and right, so it covers the notch and the Dynamic Island.
+- `statusBarStyle` needs `UIViewControllerBasedStatusBarAppearance` set to `NO` in `Info.plist`, as the React Native template does. With `YES`, iOS ignores it and a warning is logged.
+- Avoid `StatusBar` from React Native for `barStyle` alongside this component. Both set the same app state.
+- Inside a `Modal`, `statusBarStyle` has no effect. iOS keeps its default icon color while a Modal is up, so choose a `statusBarColor` that works with it. `statusBarColor` itself works as usual.
+- Insets are those of the window, so a `Modal` shown as a `pageSheet` or `formSheet` gets more padding than it needs. Modals that cover the screen are fine.
 
 ## Contributing
 

@@ -27,7 +27,9 @@ import type {
 } from './SystemBarsView.types';
 
 // Android 8.0 added dark navigation bar icons. Before it they are always light.
-const SUPPORTS_DARK_NAVIGATION_ICONS = Number(Platform.Version) >= 26;
+// iOS has no such icons: the home indicator picks its own color.
+const NEEDS_LIGHT_ICON_SCRIM =
+  Platform.OS === 'android' && Number(Platform.Version) < 26;
 
 const ZERO_EDGES: EdgeInsets = { top: 0, right: 0, bottom: 0, left: 0 };
 
@@ -240,7 +242,7 @@ export function SystemBarsView({
 
   // Light icons on a light bar would disappear, so dim the bar behind them.
   const needsNavigationScrim =
-    !SUPPORTS_DARK_NAVIGATION_ICONS && shown.darkNavigationIcons;
+    NEEDS_LIGHT_ICON_SCRIM && shown.darkNavigationIcons;
 
   return (
     <ParentBarsContext.Provider value={parentForChildren}>
