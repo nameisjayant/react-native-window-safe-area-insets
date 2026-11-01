@@ -59,7 +59,7 @@ By default content stops below the status bar. `fullScreen` draws it behind the 
 | `statusBarColor` | color | background of `style` | Ignored while `fullScreen` is on. |
 | `navigationBarColor` | color | background of `style` | |
 | `fullScreen` | boolean | `false` | Draw content behind the status bar and the cutout. |
-| `statusBarStyle` | `auto`, `dark-content`, `light-content` | `auto` | Icon color. `auto` picks whichever is readable. |
+| `statusBarStyle` | `auto`, `dark-content`, `light-content` | `auto` | Icon color. `auto` picks whichever is readable. In `fullScreen` it goes by the background of `style`, so set it yourself over an image. |
 | `navigationBarStyle` | `auto`, `dark-content`, `light-content` | `auto` | On Android 7 the icons are always light, so a light bar is dimmed to keep them visible. No effect on iOS. |
 | `style` | view style | | Applied to the view holding the children. |
 
@@ -70,6 +70,7 @@ By default content stops below the status bar. `fullScreen` draws it behind the 
 - Requires the New Architecture. Android support follows React Native's own minimum, which is Android 7 (API 24) on React Native 0.88.
 - The window stays edge-to-edge from the first time a `SystemBarsView` mounts, so wrap every screen, or wrap once in `App.js`.
 - Avoid `StatusBar` from React Native for `barStyle` alongside this component. Both set the same window state.
+- Inside a `Modal`, set `statusBarTranslucent` and `navigationBarTranslucent` on the `Modal`. It has a window of its own, so `statusBarStyle` has no effect there, and with three-button navigation the system keeps a pale scrim over `navigationBarColor`.
 
 ### iOS notes
 

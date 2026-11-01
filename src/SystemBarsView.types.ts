@@ -24,7 +24,11 @@ export type SystemBarsViewProps = Omit<ViewProps, 'style' | 'children'> & {
    * @default false
    */
   fullScreen?: boolean;
-  /** @default 'auto' */
+  /**
+   * In `fullScreen`, `auto` goes by the background of `style`.
+   *
+   * @default 'auto'
+   */
   statusBarStyle?: SystemBarStyle;
   /** @default 'auto' */
   navigationBarStyle?: SystemBarStyle;

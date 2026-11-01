@@ -173,7 +173,10 @@ export function SystemBarsView({
   const fullScreen = fullScreenProp ?? parent?.fullScreen;
 
   const contentBackground = StyleSheet.flatten(style)?.backgroundColor;
-  const topColor = statusBarColor ?? contentBackground;
+  // A full screen wrapper has no status bar color of its own, and one inherited
+  // from a parent must not decide its icons: its content is behind them.
+  const topColor =
+    (fullScreen ? undefined : statusBarColor) ?? contentBackground;
   const bottomColor = navigationBarColor ?? contentBackground;
 
   const darkStatusBarIcons = usesDarkIcons(
